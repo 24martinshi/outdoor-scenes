@@ -33,11 +33,6 @@ def process_image(image):
 def save_image(image, output_path):
     cv2.imwrite(output_path, image)
 
-# def main():
-#     image = read_image(input_path)
-#     segmented_image = process_image(image)
-#     save_image(segmented_image, output_path)
-
 def main():
     for filename in os.listdir(input_folder):
         

@@ -9,14 +9,9 @@ from cldm.model import create_model, load_state_dict
 
 def main():
     # Configs
-    # resume_path = './models/control_sd15_ini_waymo.ckpt'
-    # resume_path = './models/control_sd15_ini_waymo_seg.ckpt'
-    # resume_path = './models/control_sd15_ini.ckpt'
     resume_path = './models/control_sd15_seg-Copy1.pth'  
 
-    # TODO: modifying batch size to reduce GPU memory required
     batch_size = 4
-    # batch_size = 1
 
     logger_freq = 300
     learning_rate = 1e-5
@@ -35,14 +30,10 @@ def main():
     # Misc
     dataset = MyDataset()
 
-    # TODO: slowly increase num_workers to speed up training
     dataloader = DataLoader(dataset, num_workers=16, batch_size=batch_size, shuffle=True)
-    # dataloader = DataLoader(dataset, num_workers=4, batch_size=batch_size, shuffle=True)
     logger = ImageLogger(batch_frequency=logger_freq)
 
     checkpoint_callback_last = ModelCheckpoint(
-
-        # TODO: adjust these every run!
         dirpath='./models/checkpoints/1981_no_acc/',
         filename='checkpoint-{epoch}',
         save_top_k=-1,
@@ -51,18 +42,8 @@ def main():
         save_last=True,  
     )
     
-    # TODO: changing mixed precision values, gpu values
-    # trainer = pl.Trainer(gpus=1, precision=32, callbacks=[logger])
-    # trainer = pl.Trainer(gpus=1, precision=16, callbacks=[logger])
-    
-    # trainer = pl.Trainer(max_epochs=2, gpus=1, precision=16, callbacks=[logger])
     trainer = pl.Trainer(max_epochs=8, gpus=1, precision=16, callbacks=[logger, checkpoint_callback_last])
     
-    # trainer = pl.Trainer(gpus=2, strategy='ddp', accumulate_grad_batches=1, precision=32, callbacks=[logger])
-    # trainer = pl.Trainer(gpus=1, precision=16, callbacks=[logger])
-
-
-    # Train!
     trainer.fit(model, dataloader)
 
 

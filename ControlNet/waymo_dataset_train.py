@@ -24,19 +24,9 @@ class MyDataset(Dataset):
         source_filename = item['source']
         target_filename = item['target']
         prompt = item['prompt']
-
-        # source = cv2.imread(f'./training/waymo_seg/' + source_filename)
-        # target = cv2.imread(f'./training/waymo_seg/' + target_filename)
         
-        source = cv2.imread(f'./training/waymo_unif/' + source_filename)
-        target = cv2.imread(f'./training/waymo_unif/' + target_filename)
-        
-#         source = cv2.imread(f'./training/waymo_train/' + source_filename)
-#         target = cv2.imread(f'./training/waymo_train/' + target_filename)
-        # source = cv2.imread(f'./training/waymo/' + source_filename)
-        # target = cv2.imread(f'./training/waymo/' + target_filename)
-        # source = cv2.imread(f'./training/fill50k/' + source_filename)
-        # target = cv2.imread(f'./training/fill50k/' + target_filename)
+        source = cv2.imread(f'./training/waymo_train/' + source_filename)
+        target = cv2.imread(f'./training/waymo_train/' + target_filename)
 
         # Do not forget that OpenCV read images in BGR order.
         source = cv2.cvtColor(source, cv2.COLOR_BGR2RGB)
